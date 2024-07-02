@@ -1,14 +1,18 @@
 [tool.poetry]
-name = "sampleproject"
+name = "picture-shrinker"
 version = "0.1.0"
-description = "Sample project"
+description = "Console script to proportionally shrink pictures"
 authors = ["NovaHFly <mugiviska@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 
+[tool.poetry.scripts]
+shrink = "picture_shrinker:main_cli"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pillow = "^10.4.0"
+cloup = "^3.0.5"
 
 [tool.poetry.group.testing.dependencies]
 ruff = "^0.4.10"
@@ -20,7 +24,7 @@ pytest = "^8.2.2"
 testpaths = ["tests"]
 
 [tool.mypy]
-mypy_path = "src"
+mypy_path = "picture_shrinker"
 strict_optional = false
 disable_error_code = "import-untyped"
 
