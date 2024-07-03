@@ -2,7 +2,11 @@ from pathlib import Path
 
 import cloup
 
-from picture_shrinker.shrinker import Mode, process_directory, process_picture
+from picture_compressor.shrinker import (
+    Mode,
+    process_directory,
+    process_picture,
+)
 
 
 @cloup.command()

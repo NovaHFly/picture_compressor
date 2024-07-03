@@ -1,8 +1,10 @@
-# Picture shrinker
+# Picture compressor
 
-A simple console script to proportionally shrink pictures,
-e.g. for thumbnails.
+A console line tool to lossy reduce picture size.
+Might be useful for:
+- Creating thumbnails
+- Reducing the storage size of large picture databases/folders
+  (If picture quality is not important)
 
 Usage:
-    shrink PICTURE_PATH
-    shrink -f FOLDER_PATH
+    TBAL
