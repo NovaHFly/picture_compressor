@@ -1,7 +1,7 @@
 
 line-length = 79
 exclude = [
-    "tests/",
+    # "tests/",
     ".venv/",
 ]
 
@@ -24,6 +24,7 @@ extend-select = [
 ]
 ignore = [
     "D100",
+    "D103",
     "D104",
     "D203",
     "N813",
@@ -35,6 +36,9 @@ ignore = [
     "RUF003",
 ]
 preview = true
+
+[lint.per-file-ignores]
+"*tests*" = ["ANN", "D103"]
 
 [lint.mccabe]
 max-complexity = 10
