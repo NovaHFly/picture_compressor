@@ -44,19 +44,19 @@ def detect_orientation(image: img.Image) -> Orientation:
     return Orientation.SQUARE
 
 
-class FixedRatioPicture:
+class BasePicture:
+    """Base class for all picture adapters."""
+
+    def __init__(self, image: img.Image) -> None:
+        """Create a new picture adapter."""
+        self.image = image
+
+
+class FixedRatioPicture(BasePicture):
     """Adapter which simpler resize interface to Pillow's Image.
 
     This adapter ensures that its image aspect ratio is preserved.
     """
-
-    def __init__(self, image: img.Image) -> None:
-        """Adapter which provides simpler interface to Pillow's Image.
-
-        Args:
-            image (Image): Image file to manipulate.
-        """
-        self.image = image
 
     def resize_to_multiplier(self, multiplier: float) -> None:
         """Resize picture to a multiplier."""
