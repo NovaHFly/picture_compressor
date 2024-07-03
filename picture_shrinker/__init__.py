@@ -2,6 +2,8 @@ from pathlib import Path
 
 import cloup
 
+from picture_shrinker.shrinker import Mode, process_picture
+
 
 @cloup.command()
 @cloup.argument(
@@ -14,4 +16,9 @@ def main_cli(path: Path) -> None:
         print("Can't process dirs for now")
         return
 
+    mode = Mode.MULTIPLIER
+    desired_size = 1800
+    multiplier = 0.5
+
     print(path)
+    process_picture(path, mode, multiplier)

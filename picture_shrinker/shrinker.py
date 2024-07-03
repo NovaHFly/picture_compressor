@@ -5,7 +5,7 @@ import PIL.Image as img
 from PIL import UnidentifiedImageError
 
 ALLOWED_FORMATS = ('jpg', 'jpe', 'jpeg', 'png', 'webp', 'tif')
-RESULT_PATH = Path('./Shrunk')
+RESULT_PATH = Path('./_shrunk_pictures')
 
 # TODO: Option to skip pictures bigger than provided size
 # TODO: Add logging
@@ -176,6 +176,6 @@ def process_picture(
 
     new_path = RESULT_PATH / path
     new_path.parent.mkdir(exist_ok=True, parents=True)
-    image.save(new_path)
+    picture.image.save(new_path)
 
     image.close()
