@@ -59,7 +59,7 @@ def process_picture(
 
     if path.suffix[1:] not in ALLOWED_FORMATS:
         print(f'Copying {path} as is.')
-        shutil.copyfile(path, new_path)
+        shutil.copy2(path, new_path)
         return
 
     with FixedRatioPicture.from_path(path) as picture:
