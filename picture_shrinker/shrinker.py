@@ -62,12 +62,7 @@ def process_picture(
         shutil.copyfile(path, new_path)
         return
 
-    image = _open_image(path)
-    picture = FixedRatioPicture(image)
-
-    _shrink_picture(picture, mode=mode, size=size)
-
-    picture.image.save(new_path)
-    print(f'{path} processed!.')
-
-    image.close()
+    with FixedRatioPicture.from_path(path) as picture:
+        _shrink_picture(picture, mode=mode, size=size)
+        picture.image.save(new_path)
+        print(f'{path} processed!.')

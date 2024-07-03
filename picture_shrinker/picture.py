@@ -1,5 +1,6 @@
 from pathlib import Path
-from typing import Type, TypeVar
+from types import TracebackType
+from typing import Optional, Type, TypeVar
 
 from PIL import Image as img
 
@@ -20,6 +21,17 @@ class BasePicture:
         """Create picture adapter by opening image from path."""
         image = img.open(path)
         return cls(image)
+
+    def __enter__(self: T) -> T:
+        return self
+
+    def __exit__(
+        self,
+        exception_type: Optional[Type[BaseException]],
+        exception_val: Optional[BaseException],
+        trace: Optional[TracebackType],
+    ) -> None:
+        self.image.close()
 
 
 class FixedRatioPicture(BasePicture):
