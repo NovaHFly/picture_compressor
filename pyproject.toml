@@ -17,11 +17,13 @@ cloup = "^3.0.5"
 [tool.poetry.group.testing.dependencies]
 ruff = "^0.4.10"
 mypy = "^1.10.1"
-pytest = "^8.2.2"
-
+pytest = "^7"
+pytest-lazy-fixture = "^0.6.3"
+pytest-cov = "^5.0.0"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+addopts = '--cov picture_shrinker'
 
 [tool.mypy]
 mypy_path = "picture_shrinker"
