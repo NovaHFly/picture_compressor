@@ -1,7 +1,7 @@
 import pytest
 from PIL import Image as img
 
-from picture_shrinker.shrinker import FixedRatioPicture
+from picture_shrinker.picture import FixedRatioPicture
 
 
 def _get_picture(size: tuple[int, int]) -> FixedRatioPicture:

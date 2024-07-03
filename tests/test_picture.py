@@ -1,23 +1,6 @@
 import pytest
 from pytest_lazyfixture import lazy_fixture as lf
 
-from picture_shrinker.shrinker import (
-    Orientation,
-    detect_orientation,
-)
-
-
-@pytest.mark.parametrize(
-    'picture, orientation',
-    (
-        (lf('landscape_picture'), Orientation.LANDSCAPE),
-        (lf('portrait_picture'), Orientation.PORTRAIT),
-        (lf('square_picture'), Orientation.SQUARE),
-    ),
-)
-def test_detect_orientation(picture, orientation):
-    assert detect_orientation(picture.image) is orientation
-
 
 @pytest.mark.parametrize(
     'picture, expected_size',
