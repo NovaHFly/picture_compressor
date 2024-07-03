@@ -7,7 +7,7 @@ from PIL import UnidentifiedImageError
 from .const import ALLOWED_FORMATS, Mode
 from .picture import FixedRatioPicture
 
-RESULT_PATH = Path('./_shrunk_pictures')
+RESULT_PATH = Path('./_resized_pictures')
 
 # TODO: Option to skip pictures bigger than provided size
 # TODO: Add logging
@@ -21,7 +21,7 @@ def _open_image(path: Path) -> img.Image:
         raise
 
 
-def _shrink_picture(
+def _resize_picture(
     picture: FixedRatioPicture, mode: Mode, size: float
 ) -> None:
     if mode is Mode.MULTIPLIER:
@@ -37,7 +37,7 @@ def process_directory(
     mode: Mode,
     size: float,
 ) -> None:
-    """Shrink all pictures in folder. Copy all incompatible files."""
+    """Resize all pictures in folder. Copy all incompatible files."""
     for file_path in path.glob('**/*.*'):
         process_picture(file_path, mode, size)
 
@@ -47,12 +47,12 @@ def process_picture(
     mode: Mode,
     size: float,
 ) -> None:
-    """Shrink a picture to set size/multiplier.
+    """Resize a picture to set size/multiplier.
 
     Args:
         path (Path): Path to picture file.
-        mode (Mode): Shrink mode to use.
-        size (float): Shrink size (abs or multiplier).
+        mode (Mode): Resize mode to use.
+        size (float): Resize size (abs or multiplier).
     """
     new_path = RESULT_PATH / path
     new_path.parent.mkdir(exist_ok=True, parents=True)
@@ -63,6 +63,6 @@ def process_picture(
         return
 
     with FixedRatioPicture.from_path(path) as picture:
-        _shrink_picture(picture, mode=mode, size=size)
+        _resize_picture(picture, mode=mode, size=size)
         picture.image.save(new_path)
         print(f'{path} processed!.')
