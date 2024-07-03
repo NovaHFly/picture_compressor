@@ -1,3 +1,4 @@
+import shutil
 from enum import Enum, auto
 from pathlib import Path
 
@@ -156,6 +157,16 @@ def _save_picture(picture: FixedRatioPicture, source_path: Path) -> None:
     picture.image.save(new_path)
 
 
+def process_directory(
+    path: Path,
+    mode: Mode,
+    size: float,
+) -> None:
+    """Shrink all pictures in folder. Copy all incompatible files."""
+    for file_path in path.glob('**/*.*'):
+        process_picture(file_path, mode, size)
+
+
 def process_picture(
     path: Path,
     mode: Mode,
@@ -168,14 +179,21 @@ def process_picture(
         mode (Mode): Shrink mode to use.
         size (float): Shrink size (abs or ratio).
     """
+    new_path = RESULT_PATH / path
+    new_path.parent.mkdir(exist_ok=True, parents=True)
+
+    if path.suffix[1:] not in ALLOWED_FORMATS:
+        print(f'Copying {path} as is.')
+        shutil.copyfile(path, new_path)
+        return
+
     image = _open_image(path)
     picture = FixedRatioPicture(image)
 
     _shrink_picture(picture, mode=mode, size=size)
     _save_picture(picture, source_path=path)
 
-    new_path = RESULT_PATH / path
-    new_path.parent.mkdir(exist_ok=True, parents=True)
     picture.image.save(new_path)
+    print(f'{path} processed!.')
 
     image.close()

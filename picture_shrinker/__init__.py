@@ -2,7 +2,7 @@ from pathlib import Path
 
 import cloup
 
-from picture_shrinker.shrinker import Mode, process_picture
+from picture_shrinker.shrinker import Mode, process_directory, process_picture
 
 
 @cloup.command()
@@ -19,10 +19,6 @@ from picture_shrinker.shrinker import Mode, process_picture
 )
 def main_cli(path: Path, greater: int, lesser: int, multiplier: float) -> None:
     """Shrink image(s) from path."""
-    if path.is_dir():
-        print("Can't process dirs for now")
-        return
-
     size: float
 
     if greater is not None:
@@ -37,5 +33,10 @@ def main_cli(path: Path, greater: int, lesser: int, multiplier: float) -> None:
         mode = Mode.MULTIPLIER
         size = multiplier
 
-    print(path)
+    if path.is_dir():
+        print(f'Dir: {path}')
+        process_directory(path, mode, size)
+        return
+
+    print(f'Single: {path}')
     process_picture(path, mode, size)
