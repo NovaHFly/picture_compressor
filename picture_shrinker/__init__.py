@@ -6,10 +6,12 @@ import cloup
 @cloup.command()
 @cloup.argument(
     'path',
-    type=cloup.Path(
-        exists=True, readable=True, resolve_path=True, path_type=Path
-    ),
+    type=cloup.Path(exists=True, readable=True, path_type=Path),
 )
-def main_cli(path: Path):
-    print(type(path))
+def main_cli(path: Path) -> None:
+    """Shrink image(s) from path."""
+    if path.is_dir():
+        print("Can't process dirs for now")
+        return
+
     print(path)
