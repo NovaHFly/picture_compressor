@@ -149,14 +149,6 @@ def _shrink_picture(
         picture.lesser_size = int(size)
 
 
-def _save_picture(picture: FixedRatioPicture, source_path: Path) -> None:
-    # TODO: Both paths may be dynamic
-
-    new_path = RESULT_PATH / source_path
-    new_path.parent.mkdir(exist_ok=True, parents=True)
-    picture.image.save(new_path)
-
-
 def process_directory(
     path: Path,
     mode: Mode,
@@ -191,7 +183,6 @@ def process_picture(
     picture = FixedRatioPicture(image)
 
     _shrink_picture(picture, mode=mode, size=size)
-    _save_picture(picture, source_path=path)
 
     picture.image.save(new_path)
     print(f'{path} processed!.')
