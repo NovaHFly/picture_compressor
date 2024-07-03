@@ -164,12 +164,12 @@ def process_picture(
     mode: Mode,
     size: float,
 ) -> None:
-    """Shrink a picture to set size/ratio.
+    """Shrink a picture to set size/multiplier.
 
     Args:
         path (Path): Path to picture file.
         mode (Mode): Shrink mode to use.
-        size (float): Shrink size (abs or ratio).
+        size (float): Shrink size (abs or multiplier).
     """
     new_path = RESULT_PATH / path
     new_path.parent.mkdir(exist_ok=True, parents=True)
