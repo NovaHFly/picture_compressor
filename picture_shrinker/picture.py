@@ -1,7 +1,11 @@
+from pathlib import Path
+from typing import Type, TypeVar
 
 from PIL import Image as img
 
 from .const import Orientation
+
+T = TypeVar('T', bound='BasePicture')
 
 
 class BasePicture:
@@ -10,6 +14,12 @@ class BasePicture:
     def __init__(self, image: img.Image) -> None:
         """Create a new picture adapter."""
         self.image = image
+
+    @classmethod
+    def from_path(cls: Type[T], path: Path) -> T:
+        """Create picture adapter by opening image from path."""
+        image = img.open(path)
+        return cls(image)
 
 
 class FixedRatioPicture(BasePicture):
