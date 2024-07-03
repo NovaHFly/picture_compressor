@@ -1,31 +1,15 @@
 import shutil
-from enum import Enum, auto
 from pathlib import Path
 
 import PIL.Image as img
 from PIL import UnidentifiedImageError
 
-ALLOWED_FORMATS = ('jpg', 'jpe', 'jpeg', 'png', 'webp', 'tif')
+from .const import ALLOWED_FORMATS, Mode, Orientation
+
 RESULT_PATH = Path('./_shrunk_pictures')
 
 # TODO: Option to skip pictures bigger than provided size
 # TODO: Add logging
-
-
-class Mode(Enum):
-    """Picture shrink mode."""
-
-    LESSER_SIZE = auto()
-    GREATER_SIZE = auto()
-    MULTIPLIER = auto()
-
-
-class Orientation(Enum):
-    """Possible picture orientations."""
-
-    LANDSCAPE = auto()
-    PORTRAIT = auto()
-    SQUARE = auto()
 
 
 def detect_orientation(image: img.Image) -> Orientation:
