@@ -22,6 +22,39 @@ class BasePicture:
         image = img.open(path)
         return cls(image)
 
+    def _set_width(self, new_width: int) -> None:
+        raise NotImplementedError
+
+    def _set_height(self, new_height: int) -> None:
+        raise NotImplementedError
+
+    @property
+    def width(self) -> int:
+        """Picture width in px."""
+        return self.image.width
+
+    @width.setter
+    def width(self, new_width: int) -> None:
+        self._set_width(new_width)
+
+    @property
+    def height(self) -> int:
+        """Picture height in px."""
+        return self.image.height
+
+    @height.setter
+    def height(self, new_height: int) -> None:
+        self._set_height(new_height)
+
+    @property
+    def size(self) -> tuple[int, int]:
+        """Picture width and height."""
+        return self.width, self.height
+
+    @size.setter
+    def size(self, size: tuple[int, int]) -> None:
+        self.image = self.image.resize(size)
+
     def __enter__(self: T) -> T:
         return self
 
@@ -44,6 +77,14 @@ class FixedRatioPicture(BasePicture):
         """Resize picture to a multiplier."""
         self.width = round(self.width * multiplier)
 
+    def _set_width(self, new_width: int) -> None:
+        new_size = (new_width, round(new_width / self.side_ratio))
+        self.image = self.image.resize(new_size)
+
+    def _set_height(self, new_height: int) -> None:
+        new_size = (round(new_height * self.side_ratio), new_height)
+        self.image = self.image.resize(new_size)
+
     @property
     def side_ratio(self) -> float:
         """Picture width to height ratio."""
@@ -57,26 +98,6 @@ class FixedRatioPicture(BasePicture):
         if self.image.width < self.image.height:
             return Orientation.PORTRAIT
         return Orientation.SQUARE
-
-    @property
-    def width(self) -> int:
-        """Picture width in px."""
-        return self.image.width
-
-    @width.setter
-    def width(self, new_width: int) -> None:
-        new_size = (new_width, round(new_width / self.side_ratio))
-        self.image = self.image.resize(new_size)
-
-    @property
-    def height(self) -> int:
-        """Picture height in px."""
-        return self.image.height
-
-    @height.setter
-    def height(self, new_height: int) -> None:
-        new_size = (round(new_height * self.side_ratio), new_height)
-        self.image = self.image.resize(new_size)
 
     @property
     def lesser_size(self) -> int:
@@ -109,8 +130,3 @@ class FixedRatioPicture(BasePicture):
             return
 
         self.width = new_size
-
-    @property
-    def size(self) -> tuple[int, int]:
-        """Picture width and height."""
-        return self.width, self.height
