@@ -2,7 +2,7 @@ from pathlib import Path
 
 import cloup
 
-from picture_compressor.shrinker import (
+from picture_compressor.resize import (
     Mode,
     process_directory,
     process_picture,
